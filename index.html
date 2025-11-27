@@ -261,7 +261,7 @@
 
         function renderDropdowns() {
             const l = document.getElementById('select-line'); const p = document.getElementById('select-process'); const qp = document.getElementById('q-process');
-            l.innerHTML = '<option value="">-- เลือกรายการ --</option>'; state.lines.forEach(x => l.innerHTML+=`<option value="${x}">${x}</option>`);
+            l.innerHTML = '<option value="">-- เลือก Line --</option>'; state.lines.forEach(x => l.innerHTML+=`<option value="${x}">${x}</option>`);
             p.innerHTML = '<option value="">-- รอเลือก Line --</option>'; qp.innerHTML = '';
             state.processes.forEach(x => { p.innerHTML+=`<option value="${x}">${x}</option>`; qp.innerHTML+=`<option value="${x}">${x}</option>`; });
         }
@@ -276,7 +276,7 @@
             toggleLoad(true);
             try {
                 let qs = [];
-                if(state.isMock) { await new Promise(r=>setTimeout(r,500)); qs = [{id:1, text:"(Mock) คำถาม...", options:["ก","ข"], correct:"ก"}]; }
+                if(state.isMock) { await new Promise(r=>setTimeout(r,500)); qs = [{id:1, part:1, text:"(Mock) คำถาม...", options:["ก","ข"], correct:"ก"}]; }
                 else {
                     const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getQuestions&process=${encodeURIComponent(state.selProc)}`);
                     const d = await res.json();
@@ -299,6 +299,12 @@
         function renderQuiz(qs) {
             const c = document.getElementById('questions-container'); c.innerHTML = ''; state.answers = {};
             qs.forEach((q, idx) => {
+                let partLabel = '';
+                let partColor = '';
+                if(q.part === 1) { partLabel = 'ส่วนที่ 1 (ทั่วไป)'; partColor = 'bg-blue-100 text-blue-700'; }
+                else if(q.part === 2) { partLabel = 'ส่วนที่ 2 (Process)'; partColor = 'bg-purple-100 text-purple-700'; }
+                else { partLabel = 'ส่วนที่ 3 (Critical)'; partColor = 'bg-red-100 text-red-700'; }
+
                 let opts = '';
                 q.options.forEach(o => opts += `
                 <label class="flex items-center p-4 border border-slate-100 rounded-xl mb-2 cursor-pointer bg-white active:bg-slate-50 transition select-none">
@@ -307,7 +313,12 @@
                     </div>
                     <span class="text-sm text-slate-700 font-medium">${o}</span>
                 </label>`);
-                c.innerHTML += `<div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100"><p class="font-bold mb-4 text-slate-800 leading-relaxed">${idx+1}. ${q.text}</p>${opts}</div>`;
+                c.innerHTML += `
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 ${partColor} text-[10px] font-bold px-3 py-1 rounded-bl-xl">${partLabel}</div>
+                    <p class="font-bold mb-4 text-slate-800 leading-relaxed pt-2"><span class="text-slate-400 mr-1">#${idx+1}</span> ${q.text}</p>
+                    ${opts}
+                </div>`;
             });
         }
 

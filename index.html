@@ -11,111 +11,114 @@
         
         body { 
             font-family: 'Prompt', sans-serif; 
-            background-color: #f4f4f5; /* Zinc-100 */
-            color: #333;
+            background-color: #f0f2f5; 
             -webkit-tap-highlight-color: transparent;
+            color: #1f2937;
         }
         
-        /* Mobile App Container */
+        /* Mobile Container Simulation */
         .app-shell {
             max-width: 480px;
             margin: 0 auto;
             min-height: 100vh;
             background: #ffffff;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 0 25px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
-            position: relative;
-            box-shadow: 0 0 40px rgba(0,0,0,0.05);
-            overflow-x: hidden;
         }
 
-        /* Branding */
-        .brand-gradient { background: linear-gradient(135deg, #FBCE07 0%, #FFD700 100%); }
-        .btn-primary {
-            background: #DD1D21;
-            color: white;
-            border-radius: 16px;
-            padding: 16px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            width: 100%;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 4px 12px rgba(221, 29, 33, 0.2);
-            display: flex; justify-content: center; align-items: center; gap: 8px;
-        }
-        .btn-primary:active { transform: scale(0.96); box-shadow: 0 2px 6px rgba(221, 29, 33, 0.2); }
-        .btn-primary:disabled { background: #E5E7EB; color: #9CA3AF; box-shadow: none; cursor: not-allowed; }
+        .hidden { display: none !important; }
 
-        .btn-ghost {
-            background: transparent;
-            color: #6B7280;
-            padding: 12px;
-            font-weight: 500;
-            width: 100%;
-            border-radius: 12px;
-        }
-        .btn-ghost:active { background: #F3F4F6; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
 
-        /* Form Elements */
+        /* Colors & Gradients */
+        .brand-bg { background-color: #FBCE07; }
+        .brand-text { color: #DD1D21; }
+        .gradient-header { background: linear-gradient(180deg, #FBCE07 0%, #facc15 100%); }
+
+        /* UI Elements */
         .input-field {
             width: 100%;
             padding: 16px;
-            background: #F9FAFB;
-            border: 2px solid transparent;
             border-radius: 16px;
+            border: 2px solid #f3f4f6;
+            background: #f9fafb;
             font-size: 1rem;
-            transition: all 0.2s;
-            color: #1F2937;
+            transition: all 0.2s ease;
+            outline: none;
         }
         .input-field:focus {
-            background: #FFFFFF;
             border-color: #FBCE07;
-            outline: none;
-            box-shadow: 0 4px 20px rgba(251, 206, 7, 0.1);
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(251, 206, 7, 0.1);
         }
-        .input-field::placeholder { color: #9CA3AF; }
 
-        /* Cards */
+        .btn-primary {
+            background: #DD1D21;
+            color: white;
+            padding: 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(221, 29, 33, 0.25);
+            transition: transform 0.1s ease, box-shadow 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-primary:active { transform: scale(0.98); box-shadow: 0 4px 10px rgba(221, 29, 33, 0.2); }
+        .btn-primary:disabled { background: #e5e7eb; color: #9ca3af; box-shadow: none; cursor: not-allowed; }
+
+        .btn-text {
+            background: transparent;
+            color: #6b7280;
+            padding: 12px;
+            border-radius: 12px;
+            width: 100%;
+            font-weight: 500;
+        }
+        .btn-text:active { background: #f3f4f6; }
+
+        /* Cards & Lists */
         .card {
             background: white;
             border-radius: 20px;
             padding: 24px;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.03);
-            border: 1px solid #F3F4F6;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+            border: 1px solid #f3f4f6;
             margin-bottom: 16px;
         }
 
-        /* Animations */
-        .page-enter { animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        /* Selection Box */
-        .select-box {
-            position: relative;
-            background: #F9FAFB;
+        .option-card {
+            border: 2px solid #f3f4f6;
             border-radius: 16px;
-            transition: all 0.2s;
-        }
-        .select-box select {
-            width: 100%;
             padding: 16px;
-            background: transparent;
-            border: none;
-            appearance: none;
-            font-size: 1rem;
-            position: relative;
-            z-index: 1;
-            outline: none;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            background: #fff;
         }
-        .select-box:focus-within { border: 2px solid #FBCE07; background: #fff; }
+        .option-card.selected {
+            border-color: #FBCE07;
+            background-color: #fffbeb;
+        }
+        .option-card:active { transform: scale(0.99); }
 
-        /* Admin Tag */
-        .admin-tag {
-            display: inline-flex; align-items: center; padding: 4px 12px;
-            background: #F3F4F6; border-radius: 99px; font-size: 0.85rem;
-            color: #4B5563; margin: 4px;
-        }
-        .admin-tag button { margin-left: 6px; color: #EF4444; }
+        /* Animations */
+        .fade-in-up { animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Loading */
+        .loader-container { position: fixed; inset: 0; background: rgba(255,255,255,0.9); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid #DD1D21; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -129,227 +132,234 @@
     </script>
 
     <!-- LOADING OVERLAY -->
-    <div id="global-loading" class="fixed inset-0 bg-white/90 z-50 flex flex-col items-center justify-center backdrop-blur-sm hidden">
-        <div class="w-12 h-12 border-4 border-gray-100 border-t-[#DD1D21] rounded-full animate-spin mb-4"></div>
-        <p class="text-sm font-medium text-gray-500 animate-pulse">กำลังโหลดข้อมูล...</p>
+    <div id="global-loading" class="loader-container hidden">
+        <div class="spinner mb-4"></div>
+        <p class="text-sm font-medium text-gray-500 animate-pulse">กำลังประมวลผล...</p>
     </div>
 
-    <!-- HEADER (Minimal) -->
-    <header class="pt-6 px-6 pb-2 bg-white flex justify-between items-center z-20">
+    <!-- HEADER (Simple & Clean) -->
+    <header class="px-6 pt-8 pb-2 bg-white sticky top-0 z-20 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl brand-gradient flex items-center justify-center text-white shadow-md">
-                <i data-lucide="shield-check" class="w-6 h-6"></i>
+            <div class="w-10 h-10 rounded-2xl brand-bg flex items-center justify-center text-white shadow-sm">
+                <i data-lucide="shield-check" class="w-6 h-6 text-slate-900"></i>
             </div>
             <div>
-                <h1 class="font-bold text-lg text-gray-900 leading-tight">Morning_Quiz</h1>
-                <p class="text-[11px] font-semibold text-[#DD1D21] tracking-wide">SHELL F.2</p>
+                <h1 class="font-bold text-lg leading-tight text-slate-800">Morning_Quiz</h1>
+                <p class="text-[10px] font-bold text-brand-red tracking-wider">SHELL F.2 SYSTEM</p>
             </div>
         </div>
-        <!-- Hidden Admin Trigger -->
-        <button onclick="toggleAdminLogin()" class="w-8 h-8 rounded-full flex items-center justify-center text-gray-300 hover:bg-gray-50 transition">
+        <button onclick="toggleAdminLogin()" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 transition">
             <i data-lucide="settings" class="w-4 h-4"></i>
         </button>
     </header>
 
-    <!-- MAIN CONTENT -->
-    <main class="flex-1 p-6 relative overflow-y-auto">
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-1 p-6 relative">
 
-        <!-- VIEW 1: WELCOME & USER INFO (Replaces Login) -->
-        <section id="step-login" class="flex flex-col h-full justify-center page-enter">
+        <!-- 1. WELCOME SCREEN (Replaces Login) -->
+        <section id="step-login" class="flex flex-col h-full justify-center pb-10 fade-in-up">
             <div class="mb-8">
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">กรุณาทำแบบทดสอบก่อนเริ่มงาน</h2>
-                <p class="text-gray-500">กรุณาระบุข้อมูลของคุณเพื่อเริ่มทำแบบทดสอบ</p>
+                <span class="inline-block px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-bold mb-3">👋 สวัสดีตอนเช้า</span>
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">เตรียมความพร้อม<br>ก่อนเริ่มงาน</h2>
+                <p class="text-gray-500">กรุณาระบุข้อมูลเพื่อยืนยันตัวตน</p>
             </div>
 
-            <form id="login-form" class="space-y-5">
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-400 uppercase ml-1">ชื่อ-นามสกุล</label>
-                    <input type="text" id="input-name" required class="input-field" placeholder="ระบุชื่อจริงของคุณ">
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="text-xs font-bold text-gray-400 uppercase ml-1 mb-1 block">ชื่อ-นามสกุล</label>
+                    <div class="relative">
+                        <i data-lucide="user" class="absolute left-4 top-4 w-5 h-5 text-gray-400"></i>
+                        <input type="text" id="input-name" required class="input-field pl-12" placeholder="ระบุชื่อจริง">
+                    </div>
                 </div>
-                <div class="space-y-1">
-                    <label class="text-xs font-bold text-gray-400 uppercase ml-1">รหัสพนักงาน</label>
-                    <input type="tel" id="input-empid" required class="input-field" placeholder="ตัวเลขรหัสพนักงาน">
+                <div>
+                    <label class="text-xs font-bold text-gray-400 uppercase ml-1 mb-1 block">รหัสพนักงาน</label>
+                    <div class="relative">
+                        <i data-lucide="hash" class="absolute left-4 top-4 w-5 h-5 text-gray-400"></i>
+                        <input type="tel" id="input-empid" required class="input-field pl-12" placeholder="เช่น 12345">
+                    </div>
                 </div>
-                <div class="pt-4">
+                
+                <div class="pt-6">
                     <button type="submit" class="btn-primary">
-                        ถัดไป <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        <span>เริ่มต้นใช้งาน</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
                     </button>
                 </div>
             </form>
-            
-            <div id="mock-warning" class="hidden mt-6 p-4 bg-yellow-50 rounded-2xl border border-yellow-100 flex items-center gap-3">
-                <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 shrink-0">
-                    <i data-lucide="wifi-off" class="w-4 h-4"></i>
-                </div>
-                <div>
-                    <p class="text-xs font-bold text-yellow-800">Offline Mode</p>
-                    <p class="text-[10px] text-yellow-700">ระบบไม่สามารถเชื่อมต่อ Server ได้</p>
-                </div>
+
+            <div id="mock-warning" class="hidden mt-6 p-4 bg-red-50 rounded-2xl border border-red-100 flex items-center gap-3 animate-pulse">
+                <i data-lucide="wifi-off" class="w-5 h-5 text-red-500"></i>
+                <span class="text-xs font-medium text-red-600">ไม่สามารถเชื่อมต่อ Server (Offline Mode)</span>
             </div>
         </section>
 
-        <!-- VIEW 2: SELECT AREA -->
-        <section id="step-select" class="hidden h-full flex flex-col page-enter">
+        <!-- 2. SELECTION SCREEN -->
+        <section id="step-select" class="hidden h-full flex flex-col fade-in-up">
             <div class="flex-1">
                 <div class="flex items-center justify-between mb-6">
                     <div>
-                        <h2 class="text-xl font-bold text-gray-800">เลือกพื้นที่ปฏิบัติงาน</h2>
-                        <p class="text-sm text-gray-500" id="user-greeting">ผู้ทำแบบทดสอบ: -</p>
+                        <h2 class="text-xl font-bold text-slate-800">เลือกพื้นที่งาน</h2>
+                        <p class="text-sm text-gray-500" id="user-greeting">ยินดีต้อนรับคุณ...</p>
                     </div>
-                    <div class="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-gray-500">
-                        <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-400">
+                        <i data-lucide="map-pin" class="w-6 h-6"></i>
                     </div>
                 </div>
 
                 <div class="space-y-4">
-                    <div class="select-box">
-                        <select id="select-line">
-                            <option value="">-- เลือก Line การผลิต --</option>
+                    <div class="relative">
+                        <label class="text-xs font-bold text-gray-400 uppercase ml-1 mb-1 block">Line การผลิต</label>
+                        <select id="select-line" class="input-field appearance-none">
+                            <option value="">-- กรุณาเลือก --</option>
                         </select>
-                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
-                        </div>
+                        <i data-lucide="chevron-down" class="absolute right-4 bottom-4 w-5 h-5 text-gray-400 pointer-events-none"></i>
                     </div>
 
-                    <div class="select-box opacity-50" id="box-process">
-                        <select id="select-process" disabled>
-                            <option value="">-- เลือก Process --</option>
+                    <div class="relative opacity-50 transition-opacity" id="box-process">
+                        <label class="text-xs font-bold text-gray-400 uppercase ml-1 mb-1 block">Process กระบวนการ</label>
+                        <select id="select-process" disabled class="input-field appearance-none bg-gray-100">
+                            <option value="">-- รอเลือก Line --</option>
                         </select>
-                        <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-                            <i data-lucide="chevron-down" class="w-5 h-5"></i>
-                        </div>
+                        <i data-lucide="chevron-down" class="absolute right-4 bottom-4 w-5 h-5 text-gray-400 pointer-events-none"></i>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-4">
+            <div class="pt-6">
                 <button id="btn-start-quiz" disabled class="btn-primary">
-                    เริ่มทำแบบทดสอบ
+                    เข้าสู่แบบทดสอบ
                 </button>
-                <button onclick="goBack('step-login')" class="btn-ghost mt-2">กลับไปแก้ไขข้อมูล</button>
+                <button onclick="location.reload()" class="btn-text mt-2 text-sm">เปลี่ยนผู้ใช้งาน</button>
             </div>
         </section>
 
-        <!-- VIEW 3: QUIZ -->
-        <section id="step-quiz" class="hidden h-full flex flex-col page-enter">
-            <div class="mb-4 flex justify-between items-end">
+        <!-- 3. QUIZ SCREEN -->
+        <section id="step-quiz" class="hidden h-full flex flex-col fade-in-up">
+            <!-- Progress Header -->
+            <div class="flex justify-between items-end mb-6 pb-4 border-b border-gray-100">
                 <div>
-                    <h2 class="text-xl font-bold text-gray-800">แบบทดสอบ</h2>
-                    <span id="quiz-process-tag" class="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-md mt-1 inline-block">Process</span>
+                    <span id="quiz-process-tag" class="text-[10px] bg-slate-100 text-slate-500 px-2 py-1 rounded font-bold uppercase tracking-wide">Process</span>
+                    <h2 class="text-xl font-bold text-slate-800 mt-1">แบบทดสอบ</h2>
                 </div>
-                <div class="text-xs font-bold text-[#DD1D21] bg-red-50 px-3 py-1 rounded-full">
-                    <span id="current-q-num">1</span> / <span id="total-q-num">-</span>
+                <div class="flex items-baseline gap-1">
+                    <span class="text-2xl font-black text-brand-text" id="current-q-num">1</span>
+                    <span class="text-sm text-gray-300 font-bold">/</span>
+                    <span class="text-sm text-gray-400 font-bold" id="total-q-num">-</span>
                 </div>
             </div>
 
-            <div id="questions-container" class="flex-1 space-y-6 overflow-y-auto pb-6">
-                <!-- Questions injected here -->
+            <!-- Question Area -->
+            <div id="questions-container" class="flex-1 overflow-y-auto pb-20 space-y-8">
+                <!-- Dynamic Content -->
             </div>
 
-            <div class="pt-4 mt-auto border-t border-gray-100 bg-white">
-                <button id="btn-submit-quiz" class="btn-primary shadow-lg shadow-red-200">
-                    ส่งคำตอบ
+            <!-- Bottom Action -->
+            <div class="fixed bottom-0 left-0 right-0 p-6 bg-white border-t border-gray-100 shadow-lg z-10 max-w-[480px] mx-auto">
+                <button id="btn-submit-quiz" class="btn-primary">
+                    ส่งคำตอบ <i data-lucide="send" class="w-4 h-4 ml-1"></i>
                 </button>
             </div>
         </section>
 
-        <!-- VIEW 4: RESULT -->
-        <section id="step-result" class="hidden h-full flex flex-col items-center justify-center text-center page-enter">
-            <!-- Pass -->
+        <!-- 4. RESULT SCREEN -->
+        <section id="step-result" class="hidden h-full flex flex-col items-center justify-center text-center fade-in-up pb-10">
+            
+            <!-- Pass UI -->
             <div id="result-pass" class="hidden w-full">
-                <div class="w-32 h-32 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6 relative">
-                    <div class="absolute inset-0 border-4 border-green-100 rounded-full animate-ping opacity-20"></div>
-                    <i data-lucide="check-circle-2" class="w-16 h-16 text-green-500"></i>
+                <div class="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                    <div class="absolute inset-0 border-4 border-green-50 rounded-full animate-ping opacity-50"></div>
+                    <i data-lucide="check" class="w-16 h-16 text-green-600"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800">ผ่านการทดสอบ!</h2>
+                <h2 class="text-2xl font-bold text-slate-800">ผ่านการทดสอบ!</h2>
                 <p class="text-gray-500 mt-2">คุณมีความพร้อมในการปฏิบัติงาน</p>
-                <div class="mt-8 p-6 bg-white rounded-3xl shadow-sm border border-gray-100 w-full max-w-xs mx-auto">
+                
+                <div class="mt-8 p-6 bg-white rounded-3xl border border-slate-100 shadow-sm w-full">
                     <p class="text-xs text-gray-400 uppercase font-bold tracking-widest">คะแนนของคุณ</p>
-                    <p class="text-5xl font-black mt-2 text-gray-800 score-display">-</p>
+                    <div class="text-6xl font-black mt-2 text-slate-800 score-display tracking-tight">-</div>
                 </div>
             </div>
 
-            <!-- Fail -->
+            <!-- Fail UI -->
             <div id="result-fail" class="hidden w-full">
-                <div class="w-32 h-32 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i data-lucide="x-circle" class="w-16 h-16 text-[#DD1D21]"></i>
+                <div class="w-32 h-32 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i data-lucide="x" class="w-16 h-16 text-red-600"></i>
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800">ไม่ผ่านเกณฑ์</h2>
-                <p class="text-gray-500 mt-2">ต้องตอบถูกทุกข้อ (100%) เพื่อผ่าน</p>
-                <div class="mt-8 p-6 bg-red-50 rounded-3xl border border-red-100 w-full max-w-xs mx-auto">
+                <h2 class="text-2xl font-bold text-slate-800">ไม่ผ่านเกณฑ์</h2>
+                <p class="text-gray-500 mt-2">ต้องตอบถูกทุกข้อ (100%)</p>
+                
+                <div class="mt-8 p-6 bg-red-50 rounded-3xl border border-red-100 w-full">
                     <p class="text-xs text-red-400 uppercase font-bold tracking-widest">คะแนนที่ได้</p>
-                    <p class="text-5xl font-black mt-2 text-red-600 score-display">-</p>
+                    <div class="text-6xl font-black mt-2 text-red-500 score-display tracking-tight">-</div>
                 </div>
             </div>
 
-            <button onclick="location.reload()" class="btn-ghost mt-8">กลับหน้าหลัก</button>
+            <button onclick="location.reload()" class="btn-text mt-8 flex items-center justify-center gap-2">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i> กลับหน้าหลัก
+            </button>
         </section>
 
-        <!-- ADMIN DASHBOARD -->
-        <section id="step-admin" class="hidden h-full flex flex-col page-enter">
+        <!-- ADMIN PANEL -->
+        <section id="step-admin" class="hidden h-full flex flex-col fade-in-up">
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold text-gray-800">Admin Panel</h2>
-                <button onclick="exitAdmin()" class="bg-gray-100 p-2 rounded-full text-gray-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <h2 class="text-xl font-bold text-slate-800">Admin Panel</h2>
+                <button onclick="location.reload()" class="bg-gray-100 p-2 rounded-full text-gray-500"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
 
-            <!-- Tabs -->
             <div class="flex p-1 bg-gray-100 rounded-xl mb-6">
-                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-gray-800 transition-all">สรุปผล</button>
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="flex-1 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-slate-800 transition-all">ภาพรวม</button>
                 <button onclick="switchTab('master')" id="tab-master" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 transition-all">ข้อมูลหลัก</button>
-                <button onclick="switchTab('questions')" id="tab-questions" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 transition-all">ข้อสอบ</button>
+                <button onclick="switchTab('questions')" id="tab-questions" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 transition-all">คลังข้อสอบ</button>
             </div>
 
-            <div class="flex-1 overflow-y-auto pb-20">
-                <!-- Dashboard View -->
+            <div class="flex-1 overflow-y-auto pb-24 scroll-hide">
+                <!-- Dashboard -->
                 <div id="view-dashboard">
-                    <div class="card bg-gray-800 text-white border-none">
-                        <p class="text-xs text-gray-400 mb-1">ยอดเข้าสอบทั้งหมด</p>
-                        <p class="text-4xl font-bold" id="dash-total">-</p>
+                    <div class="p-6 bg-slate-800 rounded-3xl text-white mb-6 relative overflow-hidden">
+                        <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+                        <p class="text-xs text-slate-400 mb-1">ยอดผู้เข้าสอบทั้งหมด</p>
+                        <p class="text-5xl font-bold" id="dash-total">-</p>
                     </div>
-                    <div class="flex justify-between items-center mb-2 px-1">
-                        <h3 class="font-bold text-gray-700 text-sm">ประวัติล่าสุด</h3>
-                        <button onclick="fetchDashboard()" class="text-xs text-blue-500 flex items-center gap-1"><i data-lucide="rotate-cw" class="w-3 h-3"></i> รีเฟรช</button>
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-slate-700">ประวัติล่าสุด</h3>
+                        <button onclick="fetchDashboard()" class="text-xs text-blue-500"><i data-lucide="rotate-cw" class="w-4 h-4"></i></button>
                     </div>
-                    <div id="dash-history-list" class="space-y-2">
-                        <div class="text-center py-8 text-xs text-gray-400">กำลังโหลด...</div>
+                    <div id="dash-history-list" class="space-y-3"></div>
+                </div>
+
+                <!-- Master Data -->
+                <div id="view-master" class="hidden space-y-8">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-700">Lines</h3>
+                            <button onclick="actionMaster('lines', 'add')" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> เพิ่ม</button>
+                        </div>
+                        <input id="new-line-input" class="input-field mb-3 py-3 text-sm" placeholder="พิมพ์ชื่อ Line ใหม่...">
+                        <div id="list-lines" class="flex flex-wrap gap-2"></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-700">Processes</h3>
+                            <button onclick="actionMaster('processes', 'add')" class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> เพิ่ม</button>
+                        </div>
+                        <input id="new-proc-input" class="input-field mb-3 py-3 text-sm" placeholder="พิมพ์ชื่อ Process ใหม่...">
+                        <div id="list-processes" class="flex flex-wrap gap-2"></div>
                     </div>
                 </div>
 
-                <!-- Master View -->
-                <div id="view-master" class="hidden space-y-6">
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-gray-700 text-sm">Lines</h3>
-                            <button onclick="actionMaster('lines', 'add')" class="text-xs bg-gray-800 text-white px-3 py-1.5 rounded-lg flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> เพิ่ม</button>
-                        </div>
-                        <input id="new-line-input" class="input-field mb-2 text-sm py-2" placeholder="พิมพ์ชื่อ Line ใหม่">
-                        <div id="list-lines" class="flex flex-wrap"></div>
-                    </div>
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-gray-700 text-sm">Processes</h3>
-                            <button onclick="actionMaster('processes', 'add')" class="text-xs bg-gray-800 text-white px-3 py-1.5 rounded-lg flex items-center gap-1"><i data-lucide="plus" class="w-3 h-3"></i> เพิ่ม</button>
-                        </div>
-                        <input id="new-proc-input" class="input-field mb-2 text-sm py-2" placeholder="พิมพ์ชื่อ Process ใหม่">
-                        <div id="list-processes" class="flex flex-wrap"></div>
-                    </div>
-                </div>
-
-                <!-- Questions View -->
+                <!-- Questions -->
                 <div id="view-questions" class="hidden">
-                    <div class="sticky top-0 bg-[#f4f4f5] pb-2 z-10 flex gap-2">
-                        <select id="filter-part" onchange="fetchAdminQuestions()" class="flex-1 bg-white border border-gray-200 text-sm rounded-xl px-3 py-2 outline-none">
+                    <div class="sticky top-0 bg-[#ffffff] pb-4 pt-1 z-10 flex gap-2 border-b border-gray-50 mb-4">
+                        <select id="filter-part" onchange="fetchAdminQuestions()" class="flex-1 bg-gray-50 border border-gray-200 text-sm rounded-xl px-3 py-2 outline-none font-medium">
                             <option value="1">ส่วนที่ 1 (ทั่วไป)</option>
                             <option value="2">ส่วนที่ 2 (Process)</option>
                             <option value="3">ส่วนที่ 3 (Critical)</option>
                         </select>
-                        <button onclick="openAddQuestionModal()" class="bg-[#DD1D21] text-white px-3 py-2 rounded-xl text-sm font-bold shadow-sm whitespace-nowrap">
-                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        <button onclick="openAddQuestionModal()" class="bg-green-500 text-white px-4 rounded-xl shadow-md active:scale-95 transition">
+                            <i data-lucide="plus" class="w-5 h-5"></i>
                         </button>
                     </div>
-                    <div id="admin-q-list" class="space-y-3 pb-10">
-                        <div class="text-center py-10 text-xs text-gray-400">กำลังโหลด...</div>
-                    </div>
+                    <div id="admin-q-list" class="space-y-4"></div>
                 </div>
             </div>
         </section>
@@ -357,62 +367,97 @@
     </main>
 
     <!-- MODALS -->
+    
     <!-- PIN Modal -->
-    <div id="pin-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center z-50 p-6 backdrop-blur-sm animate-fade-in">
-        <div class="bg-white w-full max-w-xs p-6 rounded-3xl text-center">
-            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i data-lucide="lock" class="w-6 h-6 text-gray-500"></i>
+    <div id="pin-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center z-50 p-6 backdrop-blur-sm fade-in-up">
+        <div class="bg-white w-full max-w-xs p-8 rounded-[32px] text-center shadow-2xl">
+            <div class="w-14 h-14 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
+                <i data-lucide="lock" class="w-6 h-6"></i>
             </div>
-            <h3 class="font-bold text-lg mb-2">เข้าสู่ระบบ Admin</h3>
-            <input type="password" id="pin-input" class="text-center text-2xl tracking-[0.5em] font-bold w-full border-b-2 border-gray-200 py-2 mb-6 outline-none focus:border-[#FBCE07]" maxlength="4" placeholder="••••">
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="document.getElementById('pin-modal').classList.add('hidden')" class="btn-ghost py-2">ยกเลิก</button>
-                <button onclick="checkPin()" class="bg-gray-800 text-white rounded-xl py-2 font-bold">ยืนยัน</button>
+            <h3 class="font-bold text-xl mb-1 text-slate-800">Admin Access</h3>
+            <p class="text-xs text-gray-400 mb-6">กรุณากรอกรหัส PIN 4 หลัก</p>
+            <input type="password" id="pin-input" class="text-center text-3xl font-bold w-full border-b-2 border-gray-200 py-2 mb-8 outline-none focus:border-brand-bg tracking-[0.5em] text-slate-800" maxlength="4" placeholder="••••">
+            <div class="flex gap-3">
+                <button onclick="document.getElementById('pin-modal').classList.add('hidden')" class="btn-text py-3">ยกเลิก</button>
+                <button onclick="checkPin()" class="bg-slate-800 text-white rounded-xl py-3 px-6 font-bold flex-1">ยืนยัน</button>
             </div>
         </div>
     </div>
 
     <!-- Master Edit Modal -->
     <div id="master-edit-modal" class="fixed inset-0 bg-black/80 hidden flex items-center justify-center z-50 p-6 backdrop-blur-sm">
-        <div class="bg-white w-full max-w-xs p-6 rounded-3xl">
-            <h3 class="font-bold text-lg mb-4">แก้ไขรายการ</h3>
-            <input type="text" id="master-edit-input" class="input-field mb-4">
+        <div class="bg-white w-full max-w-xs p-6 rounded-3xl shadow-2xl">
+            <h3 class="font-bold text-lg mb-4 text-slate-800">แก้ไขข้อมูล</h3>
+            <input type="text" id="master-edit-input" class="input-field mb-6 text-center font-medium">
             <div class="flex gap-3">
-                <button onclick="closeMasterEditModal()" class="btn-ghost">ยกเลิก</button>
-                <button onclick="confirmMasterEdit()" class="flex-1 bg-gray-800 text-white rounded-xl font-bold">บันทึก</button>
+                <button onclick="closeMasterEditModal()" class="btn-text">ยกเลิก</button>
+                <button onclick="confirmMasterEdit()" class="flex-1 bg-slate-800 text-white rounded-xl font-bold">บันทึก</button>
             </div>
         </div>
     </div>
 
     <!-- Question Modal -->
-    <div id="q-modal" class="fixed inset-0 bg-black/80 hidden flex items-end sm:items-center justify-center z-50 backdrop-blur-sm">
-        <div class="bg-white w-full sm:max-w-md p-6 rounded-t-3xl sm:rounded-3xl max-h-[90vh] overflow-y-auto animate-slide-up">
-            <div class="w-12 h-1 bg-gray-200 rounded-full mx-auto mb-6"></div>
-            <h3 class="font-bold text-xl mb-6" id="q-modal-title">เพิ่มข้อสอบ</h3>
+    <div id="q-modal" class="fixed inset-0 bg-black/90 hidden flex items-end sm:items-center justify-center z-50 backdrop-blur-sm">
+        <div class="bg-white w-full sm:max-w-md p-6 rounded-t-[32px] sm:rounded-3xl max-h-[90vh] overflow-y-auto animate-slide-up shadow-2xl">
+            <div class="w-12 h-1.5 bg-gray-200 rounded-full mx-auto mb-6"></div>
+            <h3 class="font-bold text-xl mb-6 text-slate-800" id="q-modal-title">จัดการข้อสอบ</h3>
             <input type="hidden" id="q-edit-row">
-            <div class="space-y-4">
+            <input type="hidden" id="q-image-base64">
+            <input type="hidden" id="q-current-image-url">
+
+            <div class="space-y-5">
                 <div id="q-proc-wrapper">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase">Process</label>
-                    <div class="select-box mt-1"><select id="q-process"></select></div>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Process</label>
+                    <div class="relative mt-1">
+                        <select id="q-process" class="input-field appearance-none bg-white"></select>
+                        <i data-lucide="chevron-down" class="absolute right-4 top-4 w-4 h-4 text-gray-400 pointer-events-none"></i>
+                    </div>
                 </div>
+
+                <!-- Image Upload -->
+                <div class="border-2 border-dashed border-gray-200 rounded-2xl p-4 text-center cursor-pointer hover:bg-gray-50 transition relative overflow-hidden group" onclick="document.getElementById('q-image-input').click()">
+                    <input type="file" id="q-image-input" accept="image/*" class="hidden" onchange="handleImageSelect(this)">
+                    
+                    <div id="q-image-preview-area" class="flex flex-col items-center justify-center py-2">
+                        <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center text-blue-500 mb-2">
+                            <i data-lucide="image-plus" class="w-5 h-5"></i>
+                        </div>
+                        <span class="text-xs text-gray-400 font-medium">แตะเพื่อเพิ่มรูปภาพประกอบ (ถ้ามี)</span>
+                    </div>
+                    
+                    <img id="q-image-preview" src="" class="hidden w-full h-40 object-contain rounded-xl bg-gray-50">
+                    <button type="button" id="btn-remove-img" class="hidden absolute top-2 right-2 bg-red-100 text-red-500 p-1.5 rounded-full" onclick="removeImage(event)">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
                 <div>
-                    <label class="text-[10px] font-bold text-gray-400 uppercase">คำถาม</label>
-                    <textarea id="q-text" class="input-field mt-1" rows="2"></textarea>
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">คำถาม</label>
+                    <textarea id="q-text" class="input-field mt-1 min-h-[80px]" placeholder="พิมพ์โจทย์คำถาม..."></textarea>
                 </div>
-                <div class="space-y-2">
-                    <label class="text-[10px] font-bold text-gray-400 uppercase">ตัวเลือก</label>
-                    <div class="flex items-center gap-2"><span class="w-6 text-center font-bold text-gray-400">ก.</span><input id="q-opt1" class="input-field py-2"></div>
-                    <div class="flex items-center gap-2"><span class="w-6 text-center font-bold text-gray-400">ข.</span><input id="q-opt2" class="input-field py-2"></div>
-                    <div class="flex items-center gap-2" id="q-opt3-wrapper"><span class="w-6 text-center font-bold text-gray-400">ค.</span><input id="q-opt3" class="input-field py-2"></div>
+                
+                <div class="space-y-3">
+                    <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">ตัวเลือก</label>
+                    <div class="flex items-center gap-3"><span class="w-6 text-center text-sm font-bold text-slate-400">ก.</span><input id="q-opt1" class="input-field py-3"></div>
+                    <div class="flex items-center gap-3"><span class="w-6 text-center text-sm font-bold text-slate-400">ข.</span><input id="q-opt2" class="input-field py-3"></div>
+                    <div class="flex items-center gap-3" id="q-opt3-wrapper"><span class="w-6 text-center text-sm font-bold text-slate-400">ค.</span><input id="q-opt3" class="input-field py-3" placeholder="(เว้นว่างได้)"></div>
                 </div>
-                <div class="bg-green-50 p-4 rounded-2xl">
-                    <label class="text-[10px] font-bold text-green-700 uppercase">เฉลย</label>
-                    <div class="select-box mt-1 bg-white"><select id="q-correct-idx"><option value="1">ตอบ ก.</option><option value="2">ตอบ ข.</option><option value="3">ตอบ ค.</option></select></div>
+
+                <div class="bg-green-50 p-4 rounded-2xl border border-green-100">
+                    <label class="text-[10px] font-bold text-green-700 uppercase tracking-widest">เฉลยข้อที่ถูก</label>
+                    <div class="relative mt-2">
+                        <select id="q-correct-idx" class="input-field appearance-none bg-white border-green-200 text-green-800 font-bold">
+                            <option value="1">ตอบข้อ ก.</option>
+                            <option value="2">ตอบข้อ ข.</option>
+                            <option value="3">ตอบข้อ ค.</option>
+                        </select>
+                        <i data-lucide="check-circle" class="absolute right-4 top-4 w-5 h-5 text-green-600 pointer-events-none"></i>
+                    </div>
                 </div>
             </div>
-            <div class="mt-6 flex gap-3">
-                <button onclick="document.getElementById('q-modal').classList.add('hidden')" class="btn-ghost">ยกเลิก</button>
-                <button onclick="submitQuestion()" class="flex-1 bg-[#DD1D21] text-white rounded-xl font-bold py-3">บันทึก</button>
+            <div class="mt-8 flex gap-3 pb-4">
+                <button onclick="document.getElementById('q-modal').classList.add('hidden')" class="btn-text">ยกเลิก</button>
+                <button onclick="submitQuestion()" class="flex-1 btn-primary shadow-lg">บันทึกข้อมูล</button>
             </div>
         </div>
     </div>
@@ -420,7 +465,7 @@
 </div>
 
 <script>
-    // --- STATE ---
+    // --- APP STATE ---
     let state = { lines: [], processes: [], isMock: false, masterEdit: null, adminQs: {} };
     const mockLines = ["Line A (Demo)", "Line B (Demo)"]; 
     const mockProcs = ["Process 1 (Demo)", "Process 2 (Demo)"];
@@ -428,7 +473,7 @@
     const toggleLoad = (show) => document.getElementById('global-loading').classList.toggle('hidden', !show);
     lucide.createIcons();
 
-    // 1. INIT & DATA FETCHING
+    // 1. INITIALIZATION
     async function fetchMasterData() {
         toggleLoad(true);
         try {
@@ -448,28 +493,27 @@
         }
     }
 
-    // 2. USER FLOW
+    // 2. USER JOURNEY
     document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const name = document.getElementById('input-name').value.trim();
         const id = document.getElementById('input-empid').value.trim();
         if(name && id) {
             state.user = { name, empId: id };
-            document.getElementById('user-greeting').innerText = `ผู้ทำแบบทดสอบ: ${name}`;
+            document.getElementById('user-greeting').innerHTML = `สวัสดี, <b>${name}</b>`;
             navigate('step-login', 'step-select');
             fetchMasterData();
         }
     });
 
-    function navigate(fromId, toId) {
-        document.getElementById(fromId).classList.add('hidden');
-        document.getElementById(toId).classList.remove('hidden');
+    function navigate(from, to) {
+        document.getElementById(from).classList.add('hidden');
+        document.getElementById(to).classList.remove('hidden');
         window.scrollTo(0,0);
     }
-    
-    function goBack(toId) {
+    function goBack(to) {
         ['step-select', 'step-quiz', 'step-result'].forEach(id => document.getElementById(id).classList.add('hidden'));
-        document.getElementById(toId).classList.remove('hidden');
+        document.getElementById(to).classList.remove('hidden');
     }
 
     function renderDropdowns() {
@@ -513,13 +557,12 @@
         btn.disabled = !(state.selLine && state.selProc);
     }
 
-    // 3. QUIZ LOGIC
     document.getElementById('btn-start-quiz').addEventListener('click', async () => {
         toggleLoad(true);
         try {
             let qs = [];
             if(state.isMock) { 
-                await new Promise(r=>setTimeout(r,500)); 
+                await new Promise(r=>setTimeout(r,800)); 
                 qs = [{id:1, part:1, text:"(จำลอง) ความปลอดภัยเบื้องต้น...", options:["ถูกต้อง","ไม่ถูกต้อง"], correct:"ถูกต้อง"}]; 
             } else {
                 const res = await fetch(`${GOOGLE_SCRIPT_URL}?action=getQuestions&process=${encodeURIComponent(state.selProc)}`);
@@ -528,7 +571,7 @@
             }
             
             if(!qs || qs.length === 0) {
-                alert("ไม่พบข้อสอบสำหรับ Process นี้\nกรุณาติดต่อผู้ดูแลระบบ");
+                alert("ไม่พบข้อสอบสำหรับ Process นี้\nหรือข้อสอบยังไม่ครบตามเงื่อนไข (Part 1, 2, 3)");
             } else {
                 state.currentQs = qs; 
                 renderQuiz(qs);
@@ -541,42 +584,53 @@
     });
 
     function renderQuiz(qs) {
-        const c = document.getElementById('questions-container'); 
-        c.innerHTML = ''; 
-        state.answers = {};
+        const c = document.getElementById('questions-container'); c.innerHTML = ''; state.answers = {};
         
         qs.forEach((q, idx) => {
-            let partBadge = '';
-            if(q.part === 1) partBadge = '<span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded">ทั่วไป</span>';
-            else if(q.part === 2) partBadge = '<span class="text-[10px] bg-purple-100 text-purple-700 px-2 py-0.5 rounded">Process</span>';
-            else partBadge = '<span class="text-[10px] bg-red-100 text-red-700 px-2 py-0.5 rounded">Critical</span>';
+            let partBadge = q.part === 1 ? 'ส่วนที่ 1: ทั่วไป' : (q.part === 2 ? 'ส่วนที่ 2: Process' : 'ส่วนที่ 3: Critical');
+            let imgHTML = q.image ? `<img src="${q.image}" class="w-full h-auto max-h-56 object-contain rounded-xl mb-4 bg-gray-50 border border-gray-100">` : '';
 
             let opts = '';
             q.options.forEach(o => {
                 opts += `
-                <label class="flex items-center p-4 rounded-2xl border border-gray-100 bg-white shadow-sm mb-3 cursor-pointer active:scale-[0.98] transition-transform select-none">
-                    <div class="relative w-6 h-6 mr-4 flex items-center justify-center">
-                        <input type="radio" name="q${q.id}" value="${o}" onchange="state.answers['${q.id}']='${o}'" class="peer appearance-none w-6 h-6 border-2 border-gray-300 rounded-full checked:border-[#FBCE07] checked:bg-[#FBCE07] transition-all">
-                        <i data-lucide="check" class="w-4 h-4 text-white absolute opacity-0 peer-checked:opacity-100 transition-opacity"></i>
+                <div class="option-card" onclick="selectOption(this, '${q.id}', '${o}')">
+                    <div class="w-5 h-5 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center radio-ui transition-colors">
+                        <div class="w-2.5 h-2.5 rounded-full bg-white opacity-0 transition-opacity"></div>
                     </div>
                     <span class="text-sm font-medium text-gray-700">${o}</span>
-                </label>`;
+                </div>`;
             });
 
             c.innerHTML += `
-            <div class="mb-8 last:mb-0">
+            <div class="mb-10 last:mb-0">
                 <div class="flex items-center gap-2 mb-3">
-                    ${partBadge}
-                    <p class="font-bold text-gray-800 text-lg">ข้อที่ ${idx+1}</p>
+                    <span class="text-[10px] font-bold bg-gray-100 text-gray-500 px-2 py-1 rounded uppercase tracking-wider">${partBadge}</span>
                 </div>
                 <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-sm mb-4">
-                    <p class="text-gray-700 font-medium leading-relaxed">${q.text}</p>
+                    ${imgHTML}
+                    <p class="text-lg font-bold text-slate-800 leading-relaxed"><span class="text-slate-300 mr-1">#${idx+1}</span> ${q.text}</p>
                 </div>
                 <div class="space-y-1">${opts}</div>
             </div>`;
         });
         lucide.createIcons();
     }
+
+    // Custom Radio Logic for better UX
+    window.selectOption = (card, qId, val) => {
+        state.answers[qId] = val;
+        // Reset siblings
+        const parent = card.parentElement;
+        Array.from(parent.children).forEach(c => {
+            c.classList.remove('selected', 'border-yellow-400', 'bg-yellow-50');
+            c.querySelector('.radio-ui').classList.remove('bg-yellow-400', 'border-yellow-400');
+            c.querySelector('.radio-ui div').classList.remove('opacity-100');
+        });
+        // Set active
+        card.classList.add('selected', 'border-yellow-400', 'bg-yellow-50');
+        card.querySelector('.radio-ui').classList.add('bg-yellow-400', 'border-yellow-400');
+        card.querySelector('.radio-ui div').classList.add('opacity-100');
+    };
 
     document.getElementById('btn-submit-quiz').addEventListener('click', async () => {
         if(Object.keys(state.answers).length < state.currentQs.length) return alert("กรุณาตอบคำถามให้ครบทุกข้อ");
@@ -608,7 +662,7 @@
         toggleLoad(false);
     });
 
-    // --- ADMIN ---
+    // --- ADMIN SYSTEM ---
     function toggleAdminLogin() { 
         document.getElementById('pin-modal').classList.remove('hidden'); 
         document.getElementById('pin-input').value = ''; 
@@ -619,7 +673,6 @@
         if(document.getElementById('pin-input').value === ADMIN_PIN) {
             document.getElementById('pin-modal').classList.add('hidden');
             navigate('step-login', 'step-admin');
-            // Hide select/quiz/result if open
             ['step-select','step-quiz','step-result'].forEach(id => document.getElementById(id).classList.add('hidden'));
             switchTab('dashboard'); 
             fetchDashboard();
@@ -646,7 +699,7 @@
             let html = '';
             data.recent.forEach(r => {
                 const pass = r.status.toLowerCase()=='passed';
-                html += `<div class="card p-4 flex justify-between items-center mb-2 !p-3">
+                html += `<div class="card !p-3 mb-2 flex justify-between items-center">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full flex items-center justify-center ${pass?'bg-green-50 text-green-600':'bg-red-50 text-red-600'}">
                             <i data-lucide="${pass?'check':'x'}" class="w-5 h-5"></i>
@@ -667,7 +720,7 @@
         } catch(e) { console.error(e); }
     }
 
-    // --- ADMIN: MASTER DATA ---
+    // --- MASTER DATA ---
     function renderMasterLists() { renderList('lines', state.lines); renderList('processes', state.processes); }
     function renderList(key, arr) {
         const el = document.getElementById(`list-${key}`);
@@ -704,13 +757,38 @@
     function closeMasterEditModal() { document.getElementById('master-edit-modal').classList.add('hidden'); }
     function confirmMasterEdit() { const val = document.getElementById('master-edit-input').value.trim(); if(val) actionMaster(state.masterEdit.key, 'edit', state.masterEdit.idx, val); closeMasterEditModal(); }
 
-    // --- ADMIN: QUESTIONS ---
+    // --- QUESTIONS & IMAGES ---
+    function handleImageSelect(input) {
+        const file = input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('q-image-base64').value = e.target.result;
+                document.getElementById('q-image-preview').src = e.target.result;
+                document.getElementById('q-image-preview').classList.remove('hidden');
+                document.getElementById('q-image-preview-area').classList.add('hidden');
+                document.getElementById('btn-remove-img').classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+
+    function removeImage(e) {
+        e.stopPropagation();
+        document.getElementById('q-image-input').value = '';
+        document.getElementById('q-image-base64').value = '';
+        document.getElementById('q-current-image-url').value = '';
+        document.getElementById('q-image-preview').src = '';
+        document.getElementById('q-image-preview').classList.add('hidden');
+        document.getElementById('q-image-preview-area').classList.remove('hidden');
+        document.getElementById('btn-remove-img').classList.add('hidden');
+    }
+
     async function fetchAdminQuestions() {
         if(state.isMock) return;
         const part = document.getElementById('filter-part').value;
-        const c = document.getElementById('admin-q-list'); 
+        const c = document.getElementById('admin-q-list');
         
-        // Setup UI based on Part
         document.getElementById('q-proc-wrapper').classList.toggle('hidden', part=='1');
         document.getElementById('q-opt3-wrapper').classList.toggle('hidden', part=='1');
         
@@ -722,10 +800,11 @@
             const list = data['part'+part] || [];
             c.innerHTML = list.length ? '' : '<div class="text-center py-10 text-xs text-gray-300">ไม่พบข้อสอบ</div>';
             list.forEach(q => {
+                const imgBadge = q.ImageURL ? `<span class="text-[10px] bg-blue-100 text-blue-700 px-1.5 rounded flex items-center gap-1"><i data-lucide="image" class="w-3 h-3"></i> มีรูป</span>` : '';
                 c.innerHTML += `
                 <div class="card !p-4 mb-3 relative group">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded">${part!='1'?q.ProcessName:'ทั่วไป'}</span>
+                        <div class="flex gap-2 items-center"><span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded">${part!='1'?q.ProcessName:'ทั่วไป'}</span>${imgBadge}</div>
                         <div class="flex gap-2">
                             <button onclick="editQ(${part}, ${q.row})" class="text-blue-500 bg-blue-50 p-1.5 rounded"><i data-lucide="pencil" class="w-3.5 h-3.5"></i></button>
                             <button onclick="delQ(${part}, ${q.row})" class="text-red-500 bg-red-50 p-1.5 rounded"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
@@ -753,6 +832,7 @@
         document.getElementById('q-modal-title').innerText="เพิ่มข้อสอบใหม่"; 
         document.getElementById('q-modal').classList.remove('hidden'); 
         ['q-text','q-opt1','q-opt2','q-opt3'].forEach(id=>document.getElementById(id).value=''); 
+        removeImage({stopPropagation:()=>{}});
     }
     
     function editQ(part, row) {
@@ -763,10 +843,14 @@
             document.getElementById('q-text').value=q.Question; 
             document.getElementById('q-opt1').value=q.Option1; 
             document.getElementById('q-opt2').value=q.Option2; 
-            if(part!=1){
-                document.getElementById('q-process').value=q.ProcessName; 
-                document.getElementById('q-opt3').value=q.Option3;
-            } 
+            if(part!=1){ document.getElementById('q-process').value=q.ProcessName; document.getElementById('q-opt3').value=q.Option3; }
+            if(q.ImageURL) {
+                document.getElementById('q-current-image-url').value = q.ImageURL;
+                document.getElementById('q-image-preview').src = q.ImageURL;
+                document.getElementById('q-image-preview').classList.remove('hidden');
+                document.getElementById('q-image-preview-area').classList.add('hidden');
+                document.getElementById('btn-remove-img').classList.remove('hidden');
+            } else { removeImage({stopPropagation:()=>{}}); }
             document.getElementById('q-modal').classList.remove('hidden'); 
         }
     }
@@ -777,7 +861,9 @@
             action: editRow!==null?'editQuestion':'addQuestion', part, row: editRow,
             process: part==1?'':document.getElementById('q-process').value,
             question: document.getElementById('q-text').value,
-            opt1: document.getElementById('q-opt1').value, opt2: document.getElementById('q-opt2').value, opt3: document.getElementById('q-opt3').value
+            opt1: document.getElementById('q-opt1').value, opt2: document.getElementById('q-opt2').value, opt3: document.getElementById('q-opt3').value,
+            newImageBase64: document.getElementById('q-image-base64').value,
+            currentImage: document.getElementById('q-current-image-url').value
         };
         const idx = document.getElementById('q-correct-idx').value;
         body.correct = [body.opt1, body.opt2, body.opt3][parseInt(idx)-1];
@@ -795,4 +881,3 @@
 </script>
 </body>
 </html>
-

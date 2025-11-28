@@ -10,10 +10,11 @@
     
     <style>
         :root {
-            --color-primary: #DD1D21;
-            --color-dark: #1F2937;
-            --color-light: #F9FAFB;
+            --color-primary: #DD1D21; /* Shell Red */
+            --color-dark: #1F2937;    /* Dark Gray */
+            --color-bg: #F3F4F6;      /* Light Gray */
         }
+
         body { 
             font-family: 'Prompt', sans-serif; 
             background-color: #e5e5e5; 
@@ -24,70 +25,148 @@
             display: flex;
             justify-content: center;
         }
+        
         .app-shell {
-            width: 100%; max-width: 480px; height: 100%;
-            background: #FFFFFF; position: relative; display: flex; flex-direction: column;
-            box-shadow: 0 0 40px rgba(0,0,0,0.1); overflow: hidden;
+            width: 100%;
+            max-width: 480px;
+            height: 100%;
+            background: #FFFFFF;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 0 40px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
+
         .hidden { display: none !important; }
         .hide-scroll::-webkit-scrollbar { display: none; }
+        .hide-scroll { -ms-overflow-style: none; scrollbar-width: none; }
         
-        /* UI */
-        .input-modern { width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #E5E7EB; background: #F9FAFB; font-size: 1rem; outline: none; transition: 0.2s; color: #1F2937; }
+        /* UI Components */
+        .input-modern {
+            width: 100%; padding: 14px; border-radius: 12px; 
+            border: 1px solid #E5E7EB; background: #F9FAFB; 
+            font-size: 1rem; outline: none; transition: 0.2s;
+            color: #1F2937;
+        }
         .input-modern:focus { border-color: var(--color-primary); background: #fff; }
-        .btn-primary { background: var(--color-primary); color: white; padding: 14px; border-radius: 12px; font-weight: 600; font-size: 1rem; width: 100%; text-align: center; box-shadow: 0 4px 12px rgba(221, 29, 33, 0.25); transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
+        
+        .btn-primary {
+            background: var(--color-primary); color: white;
+            padding: 14px; border-radius: 12px; font-weight: 600; font-size: 1rem;
+            width: 100%; text-align: center; 
+            box-shadow: 0 4px 12px rgba(221, 29, 33, 0.25);
+            transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;
+        }
         .btn-primary:active { transform: scale(0.98); }
         .btn-primary:disabled { background: #9CA3AF; box-shadow: none; opacity: 0.8; cursor: not-allowed; }
-        .btn-ghost { background: transparent; color: #6B7280; padding: 12px; border-radius: 12px; width: 100%; font-weight: 500; font-size: 0.9rem; }
+        
+        .btn-ghost {
+            background: transparent; color: #6B7280;
+            padding: 12px; border-radius: 12px; width: 100%; 
+            font-weight: 500; font-size: 0.9rem;
+        }
         .btn-ghost:active { background: #F3F4F6; }
-        .option-card { border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 10px; cursor: pointer; transition: 0.2s; display: flex; align-items: center; background: white; }
-        .option-card.selected { border-color: var(--color-primary); background-color: #FEF2F2; }
-        .option-card .radio-ui { width: 20px; height: 20px; border-radius: 50%; border: 2px solid #D1D5DB; margin-right: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .option-card.selected .radio-ui { border-color: var(--color-primary); background-color: var(--color-primary); }
-        .option-card.selected .radio-ui::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; }
-        .view-section { position: absolute; inset: 0; background: white; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.3s ease; z-index: 10; overflow-y: auto; }
+
+        /* Interactive Cards */
+        .option-card {
+            border: 1px solid #E5E7EB; border-radius: 12px; padding: 16px; margin-bottom: 10px;
+            cursor: pointer; transition: 0.2s; display: flex; align-items: center; background: white;
+        }
+        .option-card.selected {
+            border-color: var(--color-primary); background-color: #FEF2F2;
+        }
+        .option-card .radio-ui {
+            width: 20px; height: 20px; border-radius: 50%; border: 2px solid #D1D5DB;
+            margin-right: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+        }
+        .option-card.selected .radio-ui {
+            border-color: var(--color-primary); background-color: var(--color-primary);
+        }
+        .option-card.selected .radio-ui::after {
+            content: ''; width: 8px; height: 8px; background: white; border-radius: 50%;
+        }
+
+        /* Views & Transitions */
+        .view-section {
+            position: absolute; inset: 0; background: white;
+            display: flex; flex-direction: column;
+            opacity: 0; pointer-events: none; transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 10; overflow-y: auto;
+        }
         .view-section.active { opacity: 1; pointer-events: auto; transform: translateY(0); z-index: 20; }
-        .loader-overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.95); z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .spinner { width: 36px; height: 36px; border: 3px solid #f3f3f3; border-top: 3px solid var(--color-primary); border-radius: 50%; animation: spin 0.8s linear infinite; }
+
+        /* Loader */
+        .loader-overlay {
+            position: absolute; inset: 0; background: rgba(255,255,255,0.95); z-index: 100;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .spinner {
+            width: 36px; height: 36px; border: 3px solid #f3f3f3; 
+            border-top: 3px solid var(--color-primary); border-radius: 50%; 
+            animation: spin 0.8s linear infinite;
+        }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
         .quiz-padding { padding-bottom: 160px !important; }
     </style>
 </head>
 <body>
+
 <div class="app-shell">
+    <!-- CONFIG -->
     <script>
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwJxaPVPAID31W_i3HMZ_WRfq-j3AqoFKdPDksS5ftp5cR7nWyLlD66G871zsoForzV/exec"; 
         const ADMIN_PIN = "1234"; 
     </script>
 
-    <!-- LOADER -->
+    <!-- LOADING SCREEN -->
     <div id="global-loading" class="loader-overlay">
-        <div class="spinner mb-3"></div><p class="text-xs text-gray-500 font-bold tracking-widest">กำลังโหลด...</p>
+        <div class="spinner mb-3"></div>
+        <p class="text-xs text-gray-500 font-bold tracking-widest">กำลังโหลด...</p>
     </div>
 
     <!-- HEADER -->
     <header class="px-6 pt-8 pb-4 bg-white sticky top-0 z-30 flex justify-between items-center border-b border-gray-100">
         <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-[#DD1D21] flex items-center justify-center text-white shadow-md"><i data-lucide="shield-check" class="w-6 h-6"></i></div>
-            <div><h1 class="font-bold text-lg text-slate-800 leading-none">Morning Quiz</h1><p class="text-[10px] font-bold text-[#DD1D21] tracking-wide mt-1">SHELL F.2 SYSTEM</p></div>
+            <div class="w-10 h-10 rounded-xl bg-[#DD1D21] flex items-center justify-center text-white shadow-md">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg text-slate-800 leading-none">Morning Quiz</h1>
+                <p class="text-[10px] font-bold text-[#DD1D21] tracking-wide mt-1">SHELL F.2 SYSTEM</p>
+            </div>
         </div>
-        <button id="btn-admin-login" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 transition"><i data-lucide="settings" class="w-5 h-5"></i></button>
+        <button id="btn-admin-login" class="w-9 h-9 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-gray-100 transition">
+            <i data-lucide="settings" class="w-5 h-5"></i>
+        </button>
     </header>
 
+    <!-- MAIN CONTENT -->
     <div class="relative flex-1 overflow-hidden">
+
         <!-- 1. LANDING -->
         <section id="view-landing" class="view-section active px-6 flex flex-col justify-center items-center text-center">
-            <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mb-6 animate-bounce"><i data-lucide="clipboard-check" class="w-12 h-12 text-[#DD1D21]"></i></div>
+            <div class="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mb-6 animate-bounce">
+                <i data-lucide="clipboard-check" class="w-12 h-12 text-[#DD1D21]"></i>
+            </div>
             <h1 class="text-2xl font-bold text-gray-900 mb-2">แบบทดสอบประจำวัน</h1>
             <p class="text-sm text-gray-500 mb-10">กรุณาทำแบบทดสอบความปลอดภัย<br>ก่อนเริ่มปฏิบัติงาน</p>
             <button onclick="goToLogin()" class="btn-primary w-full max-w-xs shadow-lg">เริ่มทำแบบทดสอบ</button>
-             <div id="mock-warning" class="hidden mt-8 p-3 bg-yellow-50 rounded-xl border border-yellow-100 flex items-center gap-2 text-xs text-yellow-700"><i data-lucide="wifi-off" class="w-4 h-4"></i> Offline Mode</div>
+            
+             <div id="mock-warning" class="hidden mt-8 p-3 bg-yellow-50 rounded-xl border border-yellow-100 flex items-center gap-2 text-xs text-yellow-700">
+                <i data-lucide="wifi-off" class="w-4 h-4"></i> Offline Mode
+            </div>
         </section>
 
         <!-- 2. LOGIN -->
         <section id="view-login" class="view-section px-6 pb-10 justify-center">
             <button onclick="showView('view-landing')" class="absolute top-6 left-6 p-2 -ml-2 text-gray-400"><i data-lucide="arrow-left" class="w-6 h-6"></i></button>
-            <div class="text-center mb-8"><h2 class="text-2xl font-bold text-gray-900">ลงชื่อเข้าใช้งาน</h2><p class="text-sm text-gray-500 mt-1">ระบุข้อมูลพนักงานของคุณ</p></div>
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">ลงชื่อเข้าใช้งาน</h2>
+                <p class="text-sm text-gray-500 mt-1">ระบุข้อมูลพนักงานของคุณ</p>
+            </div>
             <form id="login-form" class="space-y-4">
                 <div><label class="text-xs font-bold text-gray-500 ml-1">ชื่อ-นามสกุล</label><input type="text" id="inp-name" class="input-modern mt-1" placeholder="ระบุชื่อจริง" required></div>
                 <div><label class="text-xs font-bold text-gray-500 ml-1">รหัสพนักงาน</label><input type="tel" id="inp-empid" class="input-modern mt-1" placeholder="เช่น 12345" required></div>
@@ -97,12 +176,18 @@
 
         <!-- 3. SELECT -->
         <section id="view-select" class="view-section px-6 pt-6">
-            <div class="mb-8"><h2 class="text-xl font-bold text-gray-900">เลือกพื้นที่งาน</h2><p class="text-sm text-gray-500 mt-1" id="user-greeting">สวัสดี...</p></div>
+            <div class="mb-8">
+                <h2 class="text-xl font-bold text-gray-900">เลือกพื้นที่งาน</h2>
+                <p class="text-sm text-gray-500 mt-1" id="user-greeting">สวัสดี...</p>
+            </div>
             <div class="space-y-5">
                 <div><label class="text-xs font-bold text-gray-500 ml-1">Line การผลิต</label><select id="select-line" class="input-modern mt-1"><option value="">-- กรุณาเลือก --</option></select></div>
                 <div class="opacity-50" id="box-process"><label class="text-xs font-bold text-gray-500 ml-1">Process</label><select id="select-process" disabled class="input-modern mt-1 bg-gray-100"><option value="">-- รอเลือก Line --</option></select></div>
             </div>
-            <div class="mt-auto pb-8"><button id="btn-start-quiz" onclick="startQuiz()" disabled class="btn-primary shadow-lg">เข้าสู่แบบทดสอบ</button><button onclick="location.reload()" class="btn-ghost mt-2 text-xs">เปลี่ยนผู้ใช้งาน</button></div>
+            <div class="mt-auto pb-8">
+                <button id="btn-start-quiz" onclick="startQuiz()" disabled class="btn-primary shadow-lg">เข้าสู่แบบทดสอบ</button>
+                <button onclick="location.reload()" class="btn-ghost mt-2 text-xs">เปลี่ยนผู้ใช้งาน</button>
+            </div>
         </section>
 
         <!-- 4. QUIZ -->
@@ -127,7 +212,10 @@
                 <div class="w-24 h-24 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6 text-red-600"><i data-lucide="x-circle" class="w-12 h-12"></i></div>
                 <h2 class="text-2xl font-bold text-gray-900">ไม่ผ่านเกณฑ์</h2><p class="text-gray-500 mt-2 text-sm">ต้องตอบถูกทุกข้อ (100%) เพื่อผ่าน</p>
             </div>
-            <div class="mt-8 p-6 bg-gray-50 rounded-2xl w-full max-w-xs border border-gray-100"><p class="text-xs text-gray-400 uppercase font-bold">ผลคะแนน</p><p class="text-xl font-bold mt-2 text-gray-800" id="res-score-text">-</p></div>
+            <div class="mt-8 p-6 bg-gray-50 rounded-2xl w-full max-w-xs border border-gray-100">
+                <p class="text-xs text-gray-400 uppercase font-bold">ผลคะแนน</p>
+                <p class="text-xl font-bold mt-2 text-gray-800" id="res-score-text">-</p>
+            </div>
             <button onclick="location.reload()" class="btn-ghost mt-8">กลับหน้าหลัก</button>
         </section>
 
@@ -197,12 +285,15 @@
             <input type="hidden" id="q-edit-row"><input type="hidden" id="q-image-base64"><input type="hidden" id="q-current-image-url">
             <div class="space-y-3">
                 <div id="q-proc-wrapper"><label class="text-xs font-bold text-gray-500">Process</label><select id="q-process" class="input-modern mt-1"></select></div>
+                
+                <!-- Image Upload -->
                 <div class="border-2 border-dashed border-gray-300 rounded-xl p-3 text-center cursor-pointer bg-gray-50" onclick="document.getElementById('q-image-input').click()">
                     <input type="file" id="q-image-input" accept="image/*" class="hidden" onchange="handleImageSelect(this)">
                     <div id="q-image-preview-area"><span class="text-xs text-gray-400">แตะเพื่อเพิ่มรูปภาพ</span></div>
                     <img id="q-image-preview" src="" class="hidden w-full h-24 object-contain rounded-lg mx-auto">
                     <button type="button" id="btn-remove-img" class="hidden text-xs text-red-500 mt-1 underline" onclick="removeImage(event)">ลบรูป</button>
                 </div>
+
                 <div><label class="text-xs font-bold text-gray-500">คำถาม</label><textarea id="q-text" class="input-modern mt-1" rows="2"></textarea></div>
                 <div class="space-y-2">
                     <div class="flex gap-2 items-center"><span class="w-4 text-xs font-bold text-gray-400">ก</span><input id="q-opt1" class="input-modern py-2"></div>
@@ -220,10 +311,32 @@
 <script>
     // --- STATE ---
     let state = { lines: [], processes: [], user: null, quiz: [], answers: {}, adminQs: [], masterEdit: null, isMock: false };
+    
     const dom = (id) => document.getElementById(id);
     const show = (id) => { const el = dom(id); if(el) el.classList.remove('hidden'); };
     const hide = (id) => { const el = dom(id); if(el) el.classList.add('hidden'); };
     const toggleLoader = (s) => dom('global-loading').classList.toggle('hidden', !s);
+
+    // --- IMAGE HELPER ---
+    // Function to convert Drive link to thumbnail
+    function formatDriveImg(url) {
+        if (!url) return '';
+        if (url.includes('drive.google.com')) {
+            let id = '';
+            // Handle drive.google.com/uc?id=...
+            if (url.includes('id=')) {
+                const parts = url.split('id=');
+                if (parts.length > 1) id = parts[1].split('&')[0];
+            } 
+            // Handle drive.google.com/file/d/...
+            else if (url.includes('/d/')) {
+                const parts = url.split('/d/');
+                if (parts.length > 1) id = parts[1].split('/')[0];
+            }
+            if (id) return `https://drive.google.com/thumbnail?sz=w1000&id=${id}`;
+        }
+        return url;
+    }
 
     // --- INIT ---
     document.addEventListener("DOMContentLoaded", () => {
@@ -307,7 +420,8 @@
     function renderQuiz(qs) {
         const c = dom('questions-container'); c.innerHTML = ''; state.answers = {};
         qs.forEach((q, idx) => {
-            let img = q.image ? `<img src="${q.image}" class="w-full h-40 object-contain rounded-lg mb-3 bg-gray-50 border">` : '';
+            // Use formatDriveImg here for displaying in Quiz
+            let img = q.image ? `<img src="${formatDriveImg(q.image)}" class="w-full h-40 object-contain rounded-lg mb-3 bg-gray-50 border">` : '';
             let opts = '';
             q.options.forEach(o => {
                 opts += `<div class="option-card" onclick="selectAns(this, '${q.id}', '${o}')"><div class="radio-ui"><div class="w-2 h-2 rounded-full bg-white opacity-0 transition"></div></div><span class="text-sm font-medium text-gray-700">${o}</span></div>`;
@@ -318,8 +432,8 @@
 
     window.selectAns = (el, qId, val) => {
         state.answers[qId] = val;
-        Array.from(el.parentElement.children).forEach(c => { c.classList.remove('selected'); c.querySelector('.radio-ui').classList.remove('bg-yellow-400', 'border-yellow-400'); c.querySelector('.radio-ui div').classList.remove('opacity-100'); });
-        el.classList.add('selected'); el.querySelector('.radio-ui').classList.add('bg-yellow-400', 'border-yellow-400'); el.querySelector('.radio-ui div').classList.add('opacity-100');
+        Array.from(el.parentElement.children).forEach(c => { c.classList.remove('selected', 'border-[#FBCE07]', 'bg-[#FEF2F2]'); c.querySelector('.radio-ui').classList.remove('bg-[#FBCE07]', 'border-[#FBCE07]'); c.querySelector('.radio-ui div').classList.remove('opacity-100'); });
+        el.classList.add('selected', 'border-[#FBCE07]', 'bg-[#FEF2F2]'); el.querySelector('.radio-ui').classList.add('bg-[#FBCE07]', 'border-[#FBCE07]'); el.querySelector('.radio-ui div').classList.add('opacity-100');
         dom('txt-q-current').innerText = Object.keys(state.answers).length;
     };
 
@@ -350,7 +464,7 @@
         ['dashboard','master','questions'].forEach(x => {
             hide(`view-${x}`); const b = dom(`tab-${x}`);
             if(x===t) { show(`view-${x}`); b.classList.add('bg-slate-800','text-white','shadow'); b.classList.remove('text-gray-400'); 
-                if(t === 'master') renderMasterLists(); // Fix: Load master lists when switching tab
+                if(t === 'master') renderMasterLists(); 
             } else { b.classList.remove('bg-slate-800','text-white','shadow'); b.classList.add('text-gray-400'); }
         });
     }
@@ -371,13 +485,12 @@
     }
 
     function renderMasterLists() { 
-        // Fix: Ensure data source is correct (state.processes, not state.procs)
         renderList('lines', state.lines); 
         renderList('processes', state.processes); 
     }
     function renderList(key, arr) {
         const el = dom(`list-${key}`); 
-        if(!el) return; // Guard clause
+        if(!el) return; 
         el.innerHTML = arr.length ? '' : '<div class="text-center text-xs text-gray-400 py-4">ว่างเปล่า</div>';
         arr.forEach((item, idx) => {
             el.innerHTML += `<div class="bg-white p-3 rounded-lg border mb-2 flex justify-between items-center"><span class="text-sm text-gray-700">${item}</span><div class="flex gap-2"><button onclick="openMasterEdit('${key}', ${idx})" class="text-blue-500"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="actionMaster('${key}', 'delete', ${idx})" class="text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div>`;
@@ -394,22 +507,20 @@
         if(subAction === 'delete' && !confirm("ยืนยันลบ?")) return;
 
         toggleLoader(true);
-        // Update Local State First (Optimistic UI)
-        if(subAction=='add') state[type].push(valToSend);
-        if(subAction=='delete') state[type].splice(index, 1);
-        if(subAction=='edit') state[type][index] = valToSend;
-        renderMasterLists(); // Re-render immediately
+        if(subAction=='add') state[type==='lines'?'lines':'processes'].push(valToSend);
+        if(subAction=='delete') state[type==='lines'?'lines':'processes'].splice(index, 1);
+        if(subAction=='edit') state[type==='lines'?'lines':'processes'][index] = valToSend;
+        renderMasterLists(); 
 
         if(!state.isMock) {
             try {
                 await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', body: JSON.stringify({ action: 'manageMaster', type, subAction, index, value: valToSend }) });
-                // No need to re-fetch master data if optimistic update works, but safe to sync
             } catch(e) { alert("บันทึกไม่สำเร็จ"); toggleLoader(false); }
         }
         toggleLoader(false);
     }
 
-    function openMasterEdit(key, idx) { state.masterEdit = { key, idx }; document.getElementById('master-edit-input').value = state[key][idx]; show('modal-master-edit'); }
+    function openMasterEdit(key, idx) { state.masterEdit = { key, idx }; document.getElementById('master-edit-input').value = state[key==='lines'?'lines':'processes'][idx]; show('modal-master-edit'); }
     function closeMasterEditModal() { hide('modal-master-edit'); }
     function confirmMasterEdit() { const val = document.getElementById('master-edit-input').value.trim(); if(val) actionMaster(state.masterEdit.key, 'edit', state.masterEdit.idx, val); hide('modal-master-edit'); }
 
@@ -445,7 +556,15 @@
             c.innerHTML = list.length ? '' : '<div class="text-center py-10 text-xs text-gray-300">ไม่พบข้อสอบ</div>';
             list.forEach(q => {
                 const imgBadge = q.ImageURL ? `<span class="text-[10px] bg-blue-100 text-blue-600 px-1.5 rounded ml-2">รูป</span>` : '';
-                c.innerHTML += `<div class="bg-white p-3 rounded-xl border mb-2 shadow-sm relative"><div class="flex justify-between mb-1"><div class="flex items-center"><span class="text-[10px] font-bold bg-gray-100 px-2 rounded text-gray-500">${part!='1'?q.ProcessName:'ทั่วไป'}</span>${imgBadge}</div><div class="flex gap-2"><button onclick="editQ(${part}, ${q.row})" class="text-blue-500"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="delQ(${part}, ${q.row})" class="text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div></div><p class="text-sm font-bold text-gray-800 mb-1">${q.Question}</p><div class="text-xs text-green-600">เฉลย: ${q.CorrectAnswer}</div></div>`;
+                c.innerHTML += `
+                <div class="bg-white p-3 rounded-xl border mb-2 shadow-sm relative">
+                    <div class="flex justify-between mb-1">
+                        <div class="flex items-center"><span class="text-[10px] font-bold bg-gray-100 px-2 rounded text-gray-500">${part!='1'?q.ProcessName:'ทั่วไป'}</span>${imgBadge}</div>
+                        <div class="flex gap-2"><button onclick="editQ(${part}, ${q.row})" class="text-blue-500"><i data-lucide="pencil" class="w-4 h-4"></i></button><button onclick="delQ(${part}, ${q.row})" class="text-red-500"><i data-lucide="trash-2" class="w-4 h-4"></i></button></div>
+                    </div>
+                    <p class="text-sm font-bold text-gray-800 mb-1">${q.Question}</p>
+                    <div class="text-xs text-green-600">เฉลย: ${q.CorrectAnswer}</div>
+                </div>`;
             });
             lucide.createIcons();
         } catch(e) { c.innerHTML='Error'; }
@@ -471,7 +590,13 @@
         if(q) { 
             editRow=row; dom('q-modal-title').innerText="แก้ไขข้อสอบ"; dom('q-text').value=q.Question; dom('q-opt1').value=q.Option1; dom('q-opt2').value=q.Option2; 
             if(part!=1){ document.getElementById('q-process').value=q.ProcessName; document.getElementById('q-opt3').value=q.Option3; }
-            if(q.ImageURL) { dom('q-current-image-url').value = q.ImageURL; dom('q-image-preview').src = q.ImageURL; show('q-image-preview'); show('btn-remove-img'); hide('q-image-preview-area'); } 
+            if(q.ImageURL) { 
+                // Format image URL for preview
+                const formattedUrl = formatDriveImg(q.ImageURL);
+                dom('q-current-image-url').value = q.ImageURL; // Keep original for save
+                dom('q-image-preview').src = formattedUrl; 
+                show('q-image-preview'); show('btn-remove-img'); hide('q-image-preview-area'); 
+            } 
             else { removeImage({stopPropagation:()=>{}}); }
             show('modal-q'); 
         }

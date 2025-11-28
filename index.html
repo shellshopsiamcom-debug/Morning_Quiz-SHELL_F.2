@@ -134,7 +134,7 @@
     <!-- LOADING OVERLAY -->
     <div id="global-loading" class="loader-container hidden">
         <div class="spinner mb-4"></div>
-        <p class="text-sm font-medium text-gray-500 animate-pulse">กำลังประมวลผล...</p>
+        <p class="text-sm font-medium text-gray-500 animate-pulse">กำลังโหลดข้อมูล...</p>
     </div>
 
     <!-- HEADER (Simple & Clean) -->
@@ -286,7 +286,7 @@
                     <i data-lucide="x" class="w-16 h-16 text-red-600"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-slate-800">ไม่ผ่านเกณฑ์</h2>
-                <p class="text-gray-500 mt-2">ต้องตอบถูกทุกข้อ (100%)</p>
+                <p class="text-gray-500 mt-2">ต้องตอบถูกทุกข้อ (100%) เพื่อผ่าน</p>
                 
                 <div class="mt-8 p-6 bg-red-50 rounded-3xl border border-red-100 w-full">
                     <p class="text-xs text-red-400 uppercase font-bold tracking-widest">คะแนนที่ได้</p>
@@ -349,8 +349,8 @@
 
                 <!-- Questions -->
                 <div id="view-questions" class="hidden">
-                    <div class="sticky top-0 bg-[#ffffff] pb-4 pt-1 z-10 flex gap-2 border-b border-gray-50 mb-4">
-                        <select id="filter-part" onchange="fetchAdminQuestions()" class="flex-1 bg-gray-50 border border-gray-200 text-sm rounded-xl px-3 py-2 outline-none font-medium">
+                    <div class="sticky top-0 bg-[#f0f2f5] pb-4 pt-1 z-10 flex gap-2 border-b border-gray-200 mb-4">
+                        <select id="filter-part" onchange="fetchAdminQuestions()" class="flex-1 bg-white border border-gray-200 text-sm rounded-xl px-3 py-2 outline-none font-medium">
                             <option value="1">ส่วนที่ 1 (ทั่วไป)</option>
                             <option value="2">ส่วนที่ 2 (Process)</option>
                             <option value="3">ส่วนที่ 3 (Critical)</option>
@@ -669,9 +669,15 @@
         document.getElementById('pin-input').focus();
     }
     
-    function checkPin() {
+    async function checkPin() {
         if(document.getElementById('pin-input').value === ADMIN_PIN) {
             document.getElementById('pin-modal').classList.add('hidden');
+            
+            // Auto load Master Data when entering Admin
+            toggleLoad(true);
+            await fetchMasterData(); 
+            toggleLoad(false);
+
             navigate('step-login', 'step-admin');
             ['step-select','step-quiz','step-result'].forEach(id => document.getElementById(id).classList.add('hidden'));
             switchTab('dashboard'); 
